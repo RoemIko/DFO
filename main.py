@@ -46,7 +46,7 @@ def main():
         replace_urllist = replace_urllist.replace("https://","")
         replace_urllist = replace_urllist.replace("/","")
         #End
-        get_url = requests.get(url, headers=headers)
+        get_url = requests.get(urllist + str(n), headers=headers)
         soup = BeautifulSoup(get_url.text, 'html.parser')
         with open(r"cracked.io/" + replace_urllist + ".html", 'w',encoding='utf8') as file:
             file.write(str(soup)) #Retrieve html source
