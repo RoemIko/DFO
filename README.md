@@ -1,4 +1,4 @@
 # DFO
-# DFO
-# DFO
-# DFO
+```
+pip install -r requirements.txt
+```
