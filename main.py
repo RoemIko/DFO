@@ -7,11 +7,11 @@ import urllib.request
 from dataclasses import replace
 from email import header
 from wsgiref import headers
-from bs4 import BeautifulSoup
 
 import requests
-from requests.api import get
 import schedule
+from bs4 import BeautifulSoup
+from requests.api import get
 
 
 # Skip error, since I'm a lazy developer I didn't add a check for dir exist
