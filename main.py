@@ -10,7 +10,7 @@ import os
 def init():
     try:
         os.mkdir("cracked.io")
-    except AssertionError:
+    except FileExistsError:
         pass
 
 
