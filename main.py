@@ -7,8 +7,10 @@ import urllib.request
 from dataclasses import replace
 from email import header
 from wsgiref import headers
+from bs4 import BeautifulSoup
 
 import requests
+from requests.api import get
 import schedule
 
 
@@ -31,8 +33,9 @@ def main():
     replace_url = replace_url.replace("/","")
     #End
     get_url = requests.get(url, headers=headers)
+    soup = BeautifulSoup(get_url.text, 'html.parser')
     with open(r"cracked.io/" + replace_url + ".html", 'w',encoding='utf8') as file:
-        file.write(get_url.text)
+        file.write(str(soup))
     
     #Loop 10 times through list
     n = 11
@@ -44,8 +47,9 @@ def main():
         replace_urllist = replace_urllist.replace("/","")
         #End
         get_url = requests.get(url, headers=headers)
+        soup = BeautifulSoup(get_url.text, 'html.parser')
         with open(r"cracked.io/" + replace_urllist + ".html", 'w',encoding='utf8') as file:
-            file.write(get_url.text) #Retrieve html source
+            file.write(str(soup)) #Retrieve html source
     schedule.every().day.at("12:00").do(main) #Schedule every day at 12:00
 
     # Keep it running until you press ctrl-z
