@@ -1,0 +1,47 @@
+from dataclasses import replace
+from email import header
+from wsgiref import headers
+import requests
+import urllib.request, urllib.error, urllib.parse
+import time
+import schedule
+import os
+
+def init():
+    try:
+        os.mkdir("cracked.io")
+    except AssertionError:
+        pass
+
+
+def main():
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"}
+    url = "https://cracked.io/Forum-Combolists--297" #Normal URL
+    urllist = "https://cracked.io/Forum-Combolists--297?page=" #URL you want to collect 10 times
+
+    #Beginning of replaceing string, so it can save it as following output <Domain>.html
+    replace_url = url
+    replace_url = replace_url.replace("https://","")
+    replace_url = replace_url.replace("/","")
+    #End
+    get_url = requests.get(url, headers=headers)
+    with open(r"cracked.io/" + replace_url + ".html", 'w',encoding='utf8') as file:
+        file.write(get_url.text)
+    
+    #Loop 10 times through list
+    n = 11
+    while n > 1:
+        n = n - 1 
+        #Beginning of replaceing string, so it can save it as following output <Domain>.html
+        replace_urllist = urllist + str(n)
+        replace_urllist = replace_urllist.replace("https://","")
+        replace_urllist = replace_urllist.replace("/","")
+        #End
+        get_url = requests.get(url, headers=headers)
+        with open(r"cracked.io/" + replace_urllist + ".html", 'w',encoding='utf8') as file:
+            file.write(get_url.text) #Retrieve html source
+    schedule.every().day.at("12:00").do(main) #Schedule every day at 12:00
+
+if __name__=="__main__":
+    init()
+    main()
