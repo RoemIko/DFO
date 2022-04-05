@@ -1,12 +1,18 @@
+#!/usr/bin/python
+import os
+import time
+import urllib.error
+import urllib.parse
+import urllib.request
 from dataclasses import replace
 from email import header
 from wsgiref import headers
-import requests
-import urllib.request, urllib.error, urllib.parse
-import time
-import schedule
-import os
 
+import requests
+import schedule
+
+
+# Skip error, since I'm a lazy developer I didn't add a check for dir exist
 def init():
     try:
         os.mkdir("cracked.io")
@@ -41,6 +47,11 @@ def main():
         with open(r"cracked.io/" + replace_urllist + ".html", 'w',encoding='utf8') as file:
             file.write(get_url.text) #Retrieve html source
     schedule.every().day.at("12:00").do(main) #Schedule every day at 12:00
+
+    # Keep it running until you press ctrl-z
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
 
 if __name__=="__main__":
     init()
